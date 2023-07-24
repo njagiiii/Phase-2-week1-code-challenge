@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Form = () => {
+const Form = ({handleui}) => {
   const[formdata, setformdata] = useState({
     date:'',
     description:'',
@@ -17,36 +17,37 @@ const Form = () => {
     }));
   };
 
+
   //handle form submit
    const handlesubmit =(e) => {
     e.preventDefault();
+     
+    fetch('http://localhost:3000/transactions',{
+      method:'POST',
+      headers:{
+        'content-type':'application/json'
+      },
+      body:JSON.stringify(formdata)
+     })
+     .then(res => {
+      if(!res.ok){
+        throw new Error('Failed')
+      }
+      return res.json();
+     })
+     .then(data => {
+      handleui(data);
 
-    //fetch data
-       fetch('http://localhost:3000/transactions',{
-        method:'POST',
-        headers:{
-          'content-type':'application/json'
-        },
-        body:JSON.stringify(formdata)
-       })
-       .then(res => {
-        if(!res.ok){
-          throw new Error('Failed')
-        }
-        return res.json();
-       })
-       .then(data => {
-        console.log(formdata);
-        //reset form input after submission
-          setformdata({
-            date:'',
-            description:'',
-            category:'',
-            amount:''
-          })
-          alert('data added successfully');
-       })
-       .catch(error => console.log('Failed',error));
+      //reset form input after submission
+        setformdata({
+          date:'',
+          description:'',
+          category:'',
+          amount:''
+        })
+        // alert('data added successfully');
+     })
+     .catch(error => console.log('Failed',error));
    }
   return (
     <div className="formgroup">

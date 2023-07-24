@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DataList from "./DataList";
+import Form from "./Form";
 
 const Data = () => {
   const [data, setdata] = useState([]);
@@ -17,7 +18,7 @@ const Data = () => {
     );
   //fetch data
 
-  useEffect(() => {
+  const fetchData = () => {
     fetch("http://localhost:3000/transactions")
       .then((res) => {
         if (!res.ok) {
@@ -30,6 +31,15 @@ const Data = () => {
         //update the data
         setdata(data);
       });
+  }
+
+  const updateui =(tran) => {
+    setdata([tran, ...data]);
+   
+  }
+
+  useEffect(() => {
+    fetchData()
   }, []);
 
   // handle delete
@@ -51,14 +61,16 @@ const Data = () => {
         //remove the data by its id
          const updateremoved = transactions.filter((transaction) => transaction.id !==id);
           setTransactions(updateremoved);
-
+          fetchData()
           alert('Transaction deleted')
+
     })
     .catch(error => console.log('Failed',error))
 
    }
   return (
     <div>
+      <Form handleui={updateui}/>
       <div className="search">
         <input type="text" placeholder="search..." onChange={handlesearch}/>
       </div>
