@@ -10,7 +10,7 @@ function App() {
        <Form />
        <Data />
        <footer>
-        @2023GraceMakena.Allrightreserved
+        @2023GraceMakena.All right reserved
        </footer>
     </div>
   );
