@@ -76,6 +76,13 @@
       "category": "Entertainment",
       "amount": "1000",
       "id": 20
+    },
+    {
+      "date": "2012-10-24",
+      "description": "Clothes",
+      "category": "income",
+      "amount": "2000",
+      "id": 21
     }
   ]
 }
